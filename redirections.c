@@ -14,7 +14,7 @@
 
 void	dup_pipes(t_parse *cmd, int in, int i, int *fd)
 {
-	if (cmd->next->cmd != NULL || cmd->next->redir != NULL)
+	if (cmd && (cmd->next != NULL || cmd->redir != NULL))
 	{
 		dup2(fd[1], 1);
 		close(fd[0]);

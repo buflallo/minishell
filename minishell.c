@@ -71,7 +71,7 @@ int	main(int ac, char *av[], char **env)
 		add_history(g_vars.line);
 		if (!g_vars.g_err)
 		{
-			read_heredocs(commands);
+			// read_heredocs(commands);
 			if (g_vars.exit_sig != -27)
 			{
 				exec_pipeline(commands, &g_vars.my_env);

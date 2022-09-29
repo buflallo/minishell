@@ -31,7 +31,7 @@ void	__child(t_parse *cmd, t_env **env)
 
 	i = 0;
 	in = 0;
-	while (cmd->next)
+	while (cmd)
 	{
 		check_cmd(cmd);
 		pipe(fd);

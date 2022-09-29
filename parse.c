@@ -68,6 +68,7 @@ void	parse_commands(t_token **token, t_parse *command)
 		|| (*token)->e_type == SQUOTE || (*token)->e_type == DOLLAR)
 	{
 		value = jme3arg(token, 0);
+		
 		if (!command->cmd)
 			command->cmd = value;
 		else
@@ -96,7 +97,8 @@ void	create_commands(t_token *token, t_parse **command)
 				errors(3);
 				return ;
 			}
-			head = add_command(head);
+			if (token->e_type != END)
+				head = add_command(head);
 			head = head->next;
 			token = token->next;
 		}

@@ -66,10 +66,10 @@ char	*ft_strcat(char *dest, char *src)
 	int	j;
 
 	i = 0;
-	while (dest[i] != '\0')
+	while (dest && dest[i] != '\0')
 		i++;
 	j = 0;
-	while (src[j] != '\0')
+	while (src && src[j] != '\0')
 	{
 		dest[i + j] = src[j];
 		j++;
@@ -87,12 +87,10 @@ char	*join_3_str(char *s1, char *s2, char *s3)
 	str = (char *)malloc(sizeof(char) * (len + 1));
 	if (!str)
 		return (NULL);
+	str[0] = '\0';
 	str = ft_strcat(str, s1);
 	str = ft_strcat(str, s2);
 	if (s3)
-	{
 		str = ft_strcat(str, s3);
-		return (str);
-	}
 	return (str);
 }
