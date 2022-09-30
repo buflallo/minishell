@@ -60,7 +60,9 @@ void	init_env(char **env)
 		free_2(tmp);
 		i++;
 	}
-	lst_add_backenv(&g_vars.my_env, lst_new("0", '=', ft_strjoin(strdup(my_getenv(g_vars.my_env, "PWD")),"/minishell",0)));
+	val = ft_strjoin(strdup(my_getenv(g_vars.my_env, "PWD")),"/minishell",0);
+	lst_add_backenv(&g_vars.my_env, lst_new("0", '=', val));
+	free(val);
 }
 
 char	*my_getenv(t_env *env, char *key)

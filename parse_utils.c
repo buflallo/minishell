@@ -66,14 +66,6 @@ int	str_sp_chr(char *str)
 	return (i);
 }
 
-void advance_token(t_token **b)
-{
-	t_token *tmp;
-
-	tmp = *b;
-	(*b) = (*b)->next;
-	free(tmp);
-}
 char	*jme3arg(t_token **b, int exec)
 {
 	char	*str;
@@ -86,12 +78,12 @@ char	*jme3arg(t_token **b, int exec)
 		if ((*b)->e_type == DOLLAR)
 		{
 			if ((*b)->next->e_type == DQUOTE || (*b)->next->e_type == SQUOTE)
-				advance_token(b);
+				(*b) = (*b)->next;
 			else
 			{
 				if (!(*b)->val[1])
 				{
-					advance_token(b);
+					(*b) = (*b)->next;
 					if(((*b)->val)[0] == '0' && ((*b)->val)[1] != '\0')
 					{
 						tmp[1] = ((*b)->val) + 1;
@@ -132,7 +124,7 @@ char	*jme3arg(t_token **b, int exec)
 					}
 					else
 						str = ft_strjoin(str, "69", 2);
-					advance_token(b);
+					(*b) = (*b)->next;
 				}
 			}
 		}
@@ -145,10 +137,10 @@ char	*jme3arg(t_token **b, int exec)
 			str = ft_strjoin(str, (*b)->val, 0);
 		}
 		if ((*b)->flag == 1)
-			advance_token(b);
+			(*b) = (*b)->next;
 		else
 		{
-			advance_token(b);
+			(*b) = (*b)->next;
 			return (str);
 		}
 	}
@@ -156,7 +148,7 @@ char	*jme3arg(t_token **b, int exec)
 	{
 		if (!(*b)->val[1])
 		{
-			advance_token(b);
+			(*b) = (*b)->next;
 			if (my_getenv(g_vars.my_env, (*b)->val))
 				(*b)->val = my_getenv(g_vars.my_env, (*b)->val);
 			else
@@ -170,19 +162,19 @@ char	*jme3arg(t_token **b, int exec)
 			}
 			else if (!exec)
 				str = ft_strjoin(str, strdup("$?"), 2);
-			advance_token(b);
+			(*b) = (*b)->next;
 			return (str);
 		}
 	}
 	if ((*b) && (*b)->e_type == DQUOTE)
 	{
 		str = ft_strjoin(str, expand_dollar((*b)->val, 0), 2);
-		advance_token(b);
+		(*b) = (*b)->next;
 	}
 	else if ((*b) && (*b)->e_type != END)
 	{
 		str = ft_strjoin(str, (*b)->val, 0);
-		advance_token(b);
+		(*b) = (*b)->next;
 	}
 	return (str);
 }

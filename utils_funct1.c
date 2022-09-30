@@ -40,6 +40,8 @@ void	*realloc_array(char **arg, char *str)
 	}
 	new_arg[j++] = ft_strdup(str);
 	new_arg[j] = NULL;
+	if (i> 0)
+		free_2(arg);
 	if (str)
 		free(str);
 	return (new_arg);
