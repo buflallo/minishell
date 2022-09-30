@@ -71,7 +71,6 @@ char	*jme3arg(t_token **b, int exec)
 	char	*str;
 	char **tmp;
 
-	tmp = (char**) malloc(2*sizeof(char*));
 	str = NULL;
 	while ((*b) && (*b)->flag == 1)
 	{
@@ -83,6 +82,7 @@ char	*jme3arg(t_token **b, int exec)
 			{
 				if (!(*b)->val[1])
 				{
+					tmp = (char**) malloc(2*sizeof(char*));
 					(*b) = (*b)->next;
 					if(((*b)->val)[0] == '0' && ((*b)->val)[1] != '\0')
 					{
@@ -109,6 +109,7 @@ char	*jme3arg(t_token **b, int exec)
 						else
 							(*b)->val = strdup("");
 					}
+					free_2(tmp);
 				}
 				else
 				{
