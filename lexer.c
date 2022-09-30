@@ -106,7 +106,6 @@ char	*expand_dollar(char *dq_content, int exec)
 		}
 		else
 		{
-
 			type = WORD;
 			if (token_index(&(lexer->str[lexer->i])))
 				size = token_index(&(lexer->str[lexer->i]));

@@ -89,8 +89,9 @@ int	main(int ac, char *av[], char **env)
 		tmp = tokens;
 		create_commands(tokens, &commands);
 		free_tokens(&tmp);
-		exit(0);
+		// exit(0);
 		add_history(g_vars.line);
+		exit(0);
 		if (!g_vars.g_err)
 		{
 			read_heredocs(commands);

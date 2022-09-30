@@ -82,6 +82,7 @@ char	*jme3arg(t_token **b, int exec)
 			{
 				if (!(*b)->val[1])
 				{
+
 					tmp = (char**) malloc(3*sizeof(char*));
 					tmp[0] = NULL;
 					tmp[1] = NULL;
@@ -89,20 +90,20 @@ char	*jme3arg(t_token **b, int exec)
 					(*b) = (*b)->next;
 					if(((*b)->val)[0] == '0' && ((*b)->val)[1] != '\0')
 					{
-						tmp[1] = ((*b)->val) + 1;
+						printf("dollar->val = %s\n", (*b)->val);
+						tmp[0] = ((*b)->val);
 						(*b)->val = strdup(my_getenv(g_vars.my_env, "0"));
-						(*b)->val = ft_strjoin((*b)->val, tmp[1], 0);
+						(*b)->val = ft_strjoin((*b)->val, tmp[0]+1, 0);
 					}
 					else if((*b)->val[str_sp_chr((*b)->val)] != '\0')
 					{
+						str = (*b)->val;
 						tmp[0] = ft_substr((*b)->val,0,str_sp_chr((*b)->val));
 						tmp[1] = ft_substr((*b)->val,str_sp_chr((*b)->val),ft_int_strchr((*b)->val,'\0'));
 						if (my_getenv(g_vars.my_env, tmp[0]))
 							(*b)->val = strdup(my_getenv(g_vars.my_env, tmp[0]));
 						else
 							(*b)->val = strdup("");
-						if(tmp[1][0] == '\\')
-							tmp[1]++;
 						(*b)->val = ft_strjoin((*b)->val, tmp[1], 0);
 					}
 					else
@@ -113,6 +114,8 @@ char	*jme3arg(t_token **b, int exec)
 						else
 							(*b)->val = strdup("");
 					}
+					if(str)
+						free(str);
 					free_2(tmp);
 				}
 				else
