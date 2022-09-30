@@ -158,6 +158,7 @@ char	*ft_strjoin1(char *s1, char *s2, int c);
 int		pwd(void);
 void	free_2(char **tmp);
 int		env(void);
+void	free_tokens(t_token **tokens);
 void	errors(int exitt);
 void	init_env(char **env);
 char	*my_getenv(t_env *env, char *key);

@@ -57,8 +57,11 @@ void free_tokens(t_token **tokens)
 	{
 		tmp = *tokens;
 		*tokens = (*tokens)->next;
-		if (tmp->e_type != END)
+		if (tmp->e_type != END && tmp->val)
+		{
 			free(tmp->val);
+			tmp->val = NULL;
+		}
 		free(tmp);
 	}
 }

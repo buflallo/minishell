@@ -82,7 +82,10 @@ char	*jme3arg(t_token **b, int exec)
 			{
 				if (!(*b)->val[1])
 				{
-					tmp = (char**) malloc(2*sizeof(char*));
+					tmp = (char**) malloc(3*sizeof(char*));
+					tmp[0] = NULL;
+					tmp[1] = NULL;
+					tmp[2] = NULL;
 					(*b) = (*b)->next;
 					if(((*b)->val)[0] == '0' && ((*b)->val)[1] != '\0')
 					{
@@ -104,6 +107,7 @@ char	*jme3arg(t_token **b, int exec)
 					}
 					else
 					{
+						tmp[0] = (*b)->val;
 						if (my_getenv(g_vars.my_env, (*b)->val))
 							(*b)->val = ft_strdup(my_getenv(g_vars.my_env, (*b)->val));
 						else

@@ -52,10 +52,9 @@ void	free_2(char **tmp)
 	int	i;
 
 	i = 0;
-	while (tmp[i])
+	while (tmp && tmp[i])
 	{
-		if (tmp[i])
-			free(tmp[i]);
+		free(tmp[i]);
 		i++;
 	}
 	if (tmp)

@@ -85,7 +85,7 @@ char	*expand_dollar(char *dq_content, int exec)
 	size = 0;
 	tmp = NULL;
 	token = NULL;
-	result = strdup("");
+	result = NULL;
 	lexer = ft_init_lexer(dq_content, dq_content[0]);
 	while (lexer->c)
 	{
@@ -106,6 +106,7 @@ char	*expand_dollar(char *dq_content, int exec)
 		}
 		else
 		{
+
 			type = WORD;
 			if (token_index(&(lexer->str[lexer->i])))
 				size = token_index(&(lexer->str[lexer->i]));
@@ -122,9 +123,12 @@ char	*expand_dollar(char *dq_content, int exec)
 	token = init_token("", END);
 	token->flag = 0;
 	tmp = lst_add_back(tmp, token);
+	token = tmp;
 	if (exec)
 		result = jme3arg(&tmp, 1);
 	else
 		result = jme3arg(&tmp, 0);
+	free_tokens(&token);
+	free(lexer);
 	return (result);
 }
