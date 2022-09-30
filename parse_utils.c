@@ -105,7 +105,7 @@ char	*jme3arg(t_token **b, int exec)
 					else
 					{
 						if (my_getenv(g_vars.my_env, (*b)->val))
-							(*b)->val = my_getenv(g_vars.my_env, (*b)->val);
+							(*b)->val = ft_strdup(my_getenv(g_vars.my_env, (*b)->val));
 						else
 							(*b)->val = strdup("");
 					}
@@ -150,7 +150,7 @@ char	*jme3arg(t_token **b, int exec)
 		{
 			(*b) = (*b)->next;
 			if (my_getenv(g_vars.my_env, (*b)->val))
-				(*b)->val = my_getenv(g_vars.my_env, (*b)->val);
+				(*b)->val = ft_strdup(my_getenv(g_vars.my_env, (*b)->val));
 			else
 				(*b)->val = strdup("");
 		}

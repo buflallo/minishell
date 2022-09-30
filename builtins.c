@@ -30,7 +30,7 @@ char	*ft_lowercase(char *str)
 
 int	simple_cmd(t_parse *cmd)
 {
-	if (builtins_cases(cmd) && !cmd->next->cmd)
+	if (builtins_cases(cmd) && !cmd->next)
 		return (1);
 	return (0);
 }
