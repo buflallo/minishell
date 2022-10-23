@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hlachkar <hlachkar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hlachkar <hlachkar@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/15 18:20:30 by hlachkar          #+#    #+#             */
-/*   Updated: 2022/09/24 04:05:40 by hlachkar         ###   ########.fr       */
+/*   Created: 2022/05/15 18:20:30 by fahd              #+#    #+#             */
+/*   Updated: 2022/10/19 16:36:29 by hlachkar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ typedef struct s_redir
 	int				e_type;
 	int				fdout;
 	int				fdin;
-	int				index;
 	struct s_redir	*next;
 
 }		t_redir;
@@ -89,14 +88,17 @@ typedef struct s_minishell
 {
 	char	*line;
 	int		exit_status;
+	int		exit_sig;
 	int		g_err;
 	pid_t	pid;
-	int		exit_sig;
+	void	*alloc[1000000];
+	int		index;
 	t_env	*my_env;
 }		t_minishell;
 
 t_minishell	g_vars;
 
+void print_tokens(t_token *tokens);
 t_lexer	*ft_init_lexer(char *str, char c);
 t_lexer	*advance_lexer(t_lexer *lexer);
 t_token	*send_lexer_to_tokenize(t_lexer *lexer);
@@ -123,6 +125,7 @@ int		ft_strnstr(const char *str, const char *to_find, size_t len);
 char	*ft_strcharjoin(char *s1, char c);
 char	*ft_substr(char *s, unsigned int start, size_t len);
 void	ft_putnbr_fd(int n, int fd);
+int		ft_is_space(void);
 char	*ft_itoa(int n);
 int		ft_isspace(int c);
 int		ft_isalpha(int c);
@@ -136,8 +139,9 @@ int		ft_isalnum(int c);
 int		ft_strcmp(char *s1, char *s2);
 char	*ft_strdup(char *s1);
 int		ft_strlen(char *s);
+void	*f_malloc(size_t size);
 char	*ft_strjoin(char *s1, char *s2, int fr);
-char	*jme3arg(t_token **b, int exec);
+char	*jme3arg(t_token **b, int exec, int ch_d);
 size_t	ft_strlcpy(char *dest, const char *src, size_t dstsize);
 char	*join_3_str(char *s1, char *s2, char *s3);
 void	ft_putchar_fd(char c, int fd);
@@ -158,9 +162,16 @@ char	*ft_strjoin1(char *s1, char *s2, int c);
 int		pwd(void);
 void	free_2(char **tmp);
 int		env(void);
-void	free_tokens(t_token **tokens);
 void	errors(int exitt);
+int		str_sp_chr(char *str);
+char	*check_sp_chr(t_token *b);
+char	*dollar_q_d(t_token **b);
+char	*dollar_qu(t_token **b, int exec, char *str);
+char	*normal_expansion(t_token **b, int f);
+void	checkin_dollar(t_token **b, char **str, int ch_d);
 void	init_env(char **env);
+int		ft_is_ex_token(char c);
+char	*ft_strcpy(char *dest, char *src);
 char	*my_getenv(t_env *env, char *key);
 char	*my_getenv_key(t_env **env, char *key);
 void	update_export(t_env **env, char *key, char sep, char *val);
@@ -174,8 +185,10 @@ int		export(t_parse *head);
 void	check_numb(char *str);
 int		my_exit(t_parse *cmd);
 int		echo(t_parse *cmd);
+char	*if_only_dollar(t_lexer *lexer);
 int		unset(t_parse *cmd);
-void	wrong_cmd(void);
+void	wrong_cmd(char *cmd);
+void	wrong_cmd_helper(char *error, int w);
 void	c_signal(void);
 void	open_redir(t_parse *head, int exec);
 void	pipe_redir(t_parse *cmd, int in, int index, int *fd);
